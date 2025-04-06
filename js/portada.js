@@ -6,4 +6,9 @@ function irAgregar() {
     window.location.href = "../html/formulario.html";
 }
 
+function irListado() {
+    window.location.href = "../html/lista_actividades.html"
+}
+
 btnAgregar.addEventListener("click", irAgregar);
+btnListado.addEventListener("click", irListado);

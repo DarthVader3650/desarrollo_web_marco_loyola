@@ -98,6 +98,6 @@ const seleccionarComuna = () => {
 
 document.getElementById("región").addEventListener("change", seleccionarComuna);
 
-window.onload = () => {
+document.addEventListener('DOMContentLoaded', () => {
     seleccionarRegión();
-};
+});

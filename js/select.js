@@ -4,7 +4,9 @@ let btnVolver = document.getElementById("volver");
 
 function volver() {
     window.location.href = "../html/portada.html";
-}
+};
+
+btnVolver.addEventListener("click", volver);
 
 const formatoContacto = () => {
     let contactoSeleccionado = document.getElementById("contactar")
@@ -14,7 +16,7 @@ const formatoContacto = () => {
         option.value = contacto;
         option.text = contacto;
         contactoSeleccionado.appendChild(option);
-    }
+    };
 };
 
 function changeApp() {
@@ -29,19 +31,18 @@ function changeApp() {
         infoLabel.style.display = "none";
         infoText.style.display = "none";
     }
-}
+};
 
 const seleccionTema = () => {
     let temaSeleccionado = document.getElementById("tema");
-    let divOtro = null;
 
     for (const tema of temas) {
         let option = document.createElement("option");
         option.value = tema;
         option.text = tema;
         temaSeleccionado.appendChild(option);
-    }
-}
+    };
+};
 
 function changeTema() {
     const temaEscogido = document.getElementById("tema");
@@ -55,14 +56,12 @@ function changeTema() {
         infoLabelTema.style.display = "none";
         infoTextTema.style.display = "none";
     }
-}
+};
 
 document.getElementById("contactar").addEventListener("change", changeApp);
 document.getElementById("tema").addEventListener("change", changeTema);
 
-window.onload = () => {
+document.addEventListener('DOMContentLoaded', () => {
     formatoContacto();
     seleccionTema();
-};
-
-btnVolver.addEventListener("click", volver);
+});

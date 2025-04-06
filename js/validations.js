@@ -1,12 +1,12 @@
 const validateName = (name) => {
     if(!name) return false;
-    let lengthValid = 200 >= name.trim().length >= 4;
+    let lengthValid = name.trim().length >= 4 && name.trim().length <= 200;
     return lengthValid;
 }
 
 const validateEmail = (email) => {
     if (!email) return false;
-    let lengthValid = 100 >= email.length > 15;
+    let lengthValid = email.length > 15 && email.length <= 100;
   
     // validamos el formato
     let re = /^[\w.]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
@@ -29,7 +29,7 @@ const validatePhoneNumber = (phoneNumber) => {
 };
 
 const validateSector = (sector) => {
-    let lenghtValid = 100 >= sector.length > 0;
+    let lenghtValid = sector.length > 0 && sector.length <= 100;
 
     return lenghtValid;
 }
@@ -44,16 +44,12 @@ const validateDataTime = (datatime) => {
 }
 
 const validateDataTimeEnd = (datatime) => {
-    const datatimeBegin = document.getElementById("inicio");
-
-    let re = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
-    let formatValid = re.test(datatime);
-
-    if (datatime > datatimeBegin.value) {
-        return formatValid
-    } else {
-        return false
-    }
+    if (!datatime) return true; // Permitir campo vacío
+    const datatimeBegin = document.getElementById("inicio").value;
+    if (!datatimeBegin) return false;
+    const dateEnd = new Date(datatime);
+    const dateBegin = new Date(datatimeBegin);
+    return dateEnd >= dateBegin;
 }
 
 const vaildateRegion = (region) => {
@@ -86,21 +82,16 @@ const validateFotos = (files) => {
 }
 
 const validateInfoContacto = (info) => {
-    let lenghtValid = 4 <= info.length <= 50;
-
+    let lenghtValid = info.length >= 4 && info.length <= 50;
     return lenghtValid;
 }
 
 const validateOtro = (otro) => {
-    const tema = document.getElementById("tema")
-
-    if (tema.value == "Otro") {
-        if (!otro) return false;
-        else {
-            let lenghtValid = 3 <= otro.length <= 15;
-            return lenghtValid;
-        }
-    } else return true;
+    const tema = document.getElementById("tema").value;
+    if (tema === "Otro") {
+        return otro.length >= 3 && otro.length <= 15;
+    }
+    return true;
 }
 
 const validateTema = (temas) => {
@@ -120,7 +111,7 @@ const validateForm = () => {
     let fecha_termino = miForm["término"].value;
     let region = miForm["región"].value;
     let comuna = miForm["comuna"].value;
-    let fotos = miForm["foto"].value;
+    let fotos = miForm["foto"].files;
     let info_contacto = miForm["info_contacto"].value;
     let otro = miForm["otro"].value;
     let tema = miForm["tema"].value;
@@ -134,42 +125,18 @@ const validateForm = () => {
     };
 
     // lógica de validación
-    if (!validateName(nombre)) {
-        setInvalidInput("Nombre");
-    }
-    if (!validateEmail(email)) {
-        setInvalidInput("Email");
-    }
-    if (!validatePhoneNumber(telefono)) {
-        setInvalidInput("Teléfono");
-    }
-    if (!validateSector(sector)) {
-        setInvalidInput("Sector");
-    }
-    if (!validateDataTime(fecha_inicio)) {
-        setInvalidInput("Fecha de inicio");
-    }
-    if (!validateDataTimeEnd(fecha_termino)) {
-        setInvalidInput("Fecha de término");
-    }
-    if (!vaildateRegion(region)) {
-        setInvalidInput("Region");
-    }
-    if (!validateComuna(comuna)) {
-        setInvalidInput("Comuna");
-    }
-    if (!validateFotos(fotos)) {
-        setInvalidInput("Fotos");
-    }
-    if (!validateInfoContacto(info_contacto)) {
-        setInvalidInput("Información de contacto");
-    }
-    if (!validateOtro(otro)) {
-        setInvalidInput("Otro");
-    }
-    if (!validateTema(tema)) {
-        setInvalidInput("Tema");
-    }
+    if (!validateName(nombre)) setInvalidInput("Nombre");
+    if (!validateEmail(email)) setInvalidInput("Email");
+    if (!validatePhoneNumber(telefono)) setInvalidInput("Teléfono");
+    if (!validateSector(sector)) setInvalidInput("Sector");
+    if (!validateDataTime(fecha_inicio)) setInvalidInput("Fecha de inicio");
+    if (!validateDataTimeEnd(fecha_termino)) setInvalidInput("Fecha de término");
+    if (!vaildateRegion(region)) setInvalidInput("Region");
+    if (!validateComuna(comuna)) setInvalidInput("Comuna");
+    if (!validateFotos(fotos)) setInvalidInput("Fotos");
+    if (!validateInfoContacto(info_contacto)) setInvalidInput("Información de contacto");
+    if (!validateOtro(otro)) setInvalidInput("Otro");
+    if (!validateTema(tema)) setInvalidInput("Tema");
 
     // finalmente mostrar la validación
     let validationBox = document.getElementById("val-box");
