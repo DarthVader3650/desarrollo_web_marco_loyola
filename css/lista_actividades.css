@@ -14,7 +14,6 @@ body {
 .espacio-actividad {
     margin: 0 auto;
     justify-content: space-between;
-    align-items: left;
     padding: 10px 20px;
     background-color: #32a8d3;
     border-radius: 15px;

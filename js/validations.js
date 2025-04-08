@@ -102,8 +102,18 @@ const validateInfoContacto = () => {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     let formValido = true;
 
+    let checkedCount = 0;
+    checkboxes.forEach(cb => {
+        if (cb.checked) {
+            checkedCount++;
+        }
+    });
+
     checkboxes.forEach(cbox => {
         if (cbox.checked) {
+            if (checkedCount > 5) {
+                formValido = false;
+            }
             const inputTexto = document.getElementById(cbox.name);
             if (inputTexto.value.length < 4 || inputTexto.value.length > 50) {
                 formValido = false;
@@ -162,7 +172,7 @@ const validateForm = () => {
     if (!validateComuna(comuna)) setInvalidInput("Comuna");
     if (!validateFotos(fotos)) setInvalidInput("Fotos: Máximo 5");
     if (!validateOtraFoto(otraFoto)) setInvalidInput("La otra foto añadida");
-    if (!validateInfoContacto()) setInvalidInput("Información de contacto");
+    if (!validateInfoContacto()) setInvalidInput("Información de contacto: Máximo 5");
     if (!validateOtro(otro)) setInvalidInput("Otro");
     if (!validateTema(tema)) setInvalidInput("Tema");
 

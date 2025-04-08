@@ -24,22 +24,7 @@ btnAgregarFoto.addEventListener("click", function() {
 })
 
 function revisaCheck(element) {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    let checkedCount = 0;
-
-    checkboxes.forEach(cb => {
-        if (cb.checked) {
-            checkedCount++;
-        }
-    });
-
     if (element.checked) {
-        if (checkedCount > 5) {
-            alert("No puedes seleccionar más de 5 opciones.");
-            element.checked = false;
-            document.getElementById(element.name).style.display = "none";
-            return;
-        }
         document.getElementById(element.name).style.display = "block";
     } else {
         document.getElementById(element.name).style.display = "none";
