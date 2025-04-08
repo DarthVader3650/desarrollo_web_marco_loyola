@@ -17,19 +17,23 @@ const validateEmail = (email) => {
 };
 
 const validatePhoneNumber = (phoneNumber) => {
-    // validación de longitud
-    let lengthValid = phoneNumber.length >= 8;
-  
-    // validación de formato
-    let re = /^(\+56)?(\s?)((2|3|4|5|6|7|8|9)(\s?)\d{8})$/;
-    let formatValid = re.test(phoneNumber);
-  
-    // devolvemos la lógica AND de las validaciones.
-    return lengthValid && formatValid;
+    if (phoneNumber) {
+        // validación de longitud
+        let lengthValid = phoneNumber.length >= 8;
+    
+        // validación de formato
+        let re = /^(\+56)?(\s?)((2|3|4|5|6|7|8|9)(\s?)\d{8})$/;
+        let formatValid = re.test(phoneNumber);
+    
+        // devolvemos la lógica AND de las validaciones.
+        return lengthValid && formatValid;
+    } else {
+        return true
+    }
 };
 
 const validateSector = (sector) => {
-    let lenghtValid = sector.length > 0 && sector.length <= 100;
+    let lenghtValid = sector.length >= 0 && sector.length <= 100;
 
     return lenghtValid;
 }
@@ -44,12 +48,12 @@ const validateDataTime = (datatime) => {
 }
 
 const validateDataTimeEnd = (datatime) => {
-    if (!datatime) return true; // Permitir campo vacío
+    if (!datatime) return true;
     const datatimeBegin = document.getElementById("inicio").value;
     if (!datatimeBegin) return false;
     const dateEnd = new Date(datatime);
     const dateBegin = new Date(datatimeBegin);
-    return dateEnd >= dateBegin;
+    return dateEnd > dateBegin;
 }
 
 const vaildateRegion = (region) => {
@@ -84,13 +88,15 @@ const validateFotos = (files) => {
 const validateOtraFoto = (foto) => {
     let btnAgregarFoto = document.getElementById("agregarFoto");
     if (btnAgregarFoto.style.display == "none") {
+
+        if (!foto || foto.length == 0) return false;
+
+        const archivo = foto[0];
         const tiposImagenPermitidos = ['image/jpeg', 'image/png', 'image/gif'];
-
-        const typeValid = tiposImagenPermitidos.includes(foto.type);
-
-        return (foto.length == 1) && typeValid;
-    } else return true
-}
+        const typeValid = tiposImagenPermitidos.includes(archivo.type);
+        return typeValid;
+    } else return true;
+};
 
 const validateInfoContacto = () => {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -154,7 +160,7 @@ const validateForm = () => {
     if (!validateDataTimeEnd(fecha_termino)) setInvalidInput("Fecha de término");
     if (!vaildateRegion(region)) setInvalidInput("Region");
     if (!validateComuna(comuna)) setInvalidInput("Comuna");
-    if (!validateFotos(fotos)) setInvalidInput("Fotos");
+    if (!validateFotos(fotos)) setInvalidInput("Fotos: Máximo 5");
     if (!validateOtraFoto(otraFoto)) setInvalidInput("La otra foto añadida");
     if (!validateInfoContacto()) setInvalidInput("Información de contacto");
     if (!validateOtro(otro)) setInvalidInput("Otro");
@@ -187,29 +193,39 @@ const validateForm = () => {
         miForm.style.display = "none";
     
         // establecer mensaje de éxito
-        validationMessageElem.innerText = "¡Formulario válido! ¿Deseas enviarlo o volver?";
+        validationMessageElem.innerText = "¿Está seguro que desea agregar esta actividad?";
         validationListElem.textContent = "";
     
         // aplicar estilos de éxito
-        validationBox.style.backgroundColor = "#ddffdd";
-        validationBox.style.borderLeftColor = "#4CAF50";
+        validationBox.style.backgroundColor = "#87ceeb";
+        validationBox.style.borderLeftColor = "#0063d5";
     
         // Agregar botones para enviar el formulario o volver
         let submitButton = document.createElement("button");
-        submitButton.innerText = "Enviar";
+        submitButton.innerText = "Si, estoy seguro";
         submitButton.style.marginRight = "10px";
         submitButton.addEventListener("click", () => {
+            validationMessageElem.innerText = "¡Hemos recibido su información, muchas gracias y suerte en su actividad!";
+            validationListElem.removeChild(submitButton);
+            validationListElem.removeChild(backButton);
+            validationListElem.appendChild(volverButton);
           // miForm.submit();
           // no tenemos un backend al cual enviarle los datos
         });
     
         let backButton = document.createElement("button");
-        backButton.innerText = "Volver";
+        backButton.innerText = "No, no estoy seguro";
         backButton.addEventListener("click", () => {
           // Mostrar el formulario nuevamente
           miForm.style.display = "block";
           validationBox.hidden = true;
         });
+
+        let volverButton = document.createElement("button");
+        volverButton.innerText = "Volver al menu";
+        volverButton.addEventListener("click", () => {
+            window.location.href = "../html/portada.html";
+        })
     
         validationListElem.appendChild(submitButton);
         validationListElem.appendChild(backButton);
