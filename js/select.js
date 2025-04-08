@@ -1,37 +1,50 @@
 const contactos = ["WhatsApp", "Telegram", "X", "Instagram", "TikTok", "Facebook"];
 const temas = ["Música", "Deporte", "Ciencia", "Religíon", "Política", "Tecnología", "Juegos", "Baile", "Comida", "Otro"];
+const fotos = document.getElementById("foto");
+const otraFoto = document.getElementById("otra-foto");
 let btnVolver = document.getElementById("volver");
+let btnAgregarFoto = document.getElementById("agregarFoto");
+let conteoFotos = 0;
 
 function volver() {
     window.location.href = "../html/portada.html";
 };
-
 btnVolver.addEventListener("click", volver);
 
-const formatoContacto = () => {
-    let contactoSeleccionado = document.getElementById("contactar")
-
-    for (const contacto of contactos) {
-        let option = document.createElement("option");
-        option.value = contacto;
-        option.text = contacto;
-        contactoSeleccionado.appendChild(option);
-    };
-};
-
-function changeApp() {
-    const contactoEscogido = document.getElementById("contactar");
-    const infoLabel = document.querySelector("label[for='info_contacto']");
-    const infoText = document.getElementById("info_contacto");
-    
-    if (contactoEscogido.value !== "") {
-        infoLabel.style.display = "block";
-        infoText.style.display = "block";
-    } else {
-        infoLabel.style.display = "none";
-        infoText.style.display = "none";
+btnAgregarFoto.addEventListener("click", function() {
+    if (conteoFotos + fotos.files.length >= 5) {
+        alert("No puedes agregar más de 5 fotos.");
+        return;
     }
-};
+
+    otraFoto.style.display = "block";
+    btnAgregarFoto.style.display = "none";
+
+    conteoFotos++;
+})
+
+function revisaCheck(element) {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    let checkedCount = 0;
+
+    checkboxes.forEach(cb => {
+        if (cb.checked) {
+            checkedCount++;
+        }
+    });
+
+    if (element.checked) {
+        if (checkedCount > 5) {
+            alert("No puedes seleccionar más de 5 opciones.");
+            element.checked = false;
+            document.getElementById(element.name).style.display = "none";
+            return;
+        }
+        document.getElementById(element.name).style.display = "block";
+    } else {
+        document.getElementById(element.name).style.display = "none";
+    }
+}
 
 const seleccionTema = () => {
     let temaSeleccionado = document.getElementById("tema");
@@ -58,10 +71,8 @@ function changeTema() {
     }
 };
 
-document.getElementById("contactar").addEventListener("change", changeApp);
 document.getElementById("tema").addEventListener("change", changeTema);
 
 document.addEventListener('DOMContentLoaded', () => {
-    formatoContacto();
     seleccionTema();
 });

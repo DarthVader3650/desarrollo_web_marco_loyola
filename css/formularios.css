@@ -18,11 +18,10 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 90%;
     max-width: 600px;
-    height: 80vh; /* Esto hace que el formulario ocupe el 80% de la altura de la ventana */
-    overflow-y: auto; /* Habilita el scroll si el contenido excede el tamaño */
+    height: 80vh;
+    overflow-y: auto;
 }
 
-/* Títulos y estilo del formulario */
 h2 {
     text-align: center;
     margin-bottom: 20px;
@@ -35,20 +34,17 @@ h3 {
     color: #333;
 }
   
-/* Estilo de cada grupo de formulario */
 .form-group {
     margin-bottom: 15px;
 }
-  
-/* Etiquetas */
+
 label {
     font-size: 16px;
     color: #555;
     display: block;
     margin-bottom: 8px;
 }
-  
-/* Campos de texto */
+
 input[type="text"],
 input[type="email"],
 textarea,
@@ -69,8 +65,7 @@ input[type="date"]:focus {
     border-color: #4e90d2;
     outline: none;
 }
-  
-/* Estilo del botón */
+
 button {
     width: 100%;
     padding: 12px;
@@ -90,6 +85,19 @@ button:hover {
   
 button:focus {
     outline: none;
+}
+
+.btn-foto {
+    width: 20%;
+    padding: 6px;
+    background-color: #62affc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 #val-box {

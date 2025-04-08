@@ -81,9 +81,30 @@ const validateFotos = (files) => {
     return lengthValid && typeValid;
 }
 
-const validateInfoContacto = (info) => {
-    let lenghtValid = info.length >= 4 && info.length <= 50;
-    return lenghtValid;
+const validateOtraFoto = (foto) => {
+    let btnAgregarFoto = document.getElementById("agregarFoto");
+    if (btnAgregarFoto.style.display == "none") {
+        const tiposImagenPermitidos = ['image/jpeg', 'image/png', 'image/gif'];
+
+        const typeValid = tiposImagenPermitidos.includes(foto.type);
+
+        return (foto.length == 1) && typeValid;
+    } else return true
+}
+
+const validateInfoContacto = () => {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    let formValido = true;
+
+    checkboxes.forEach(cbox => {
+        if (cbox.checked) {
+            const inputTexto = document.getElementById(cbox.name);
+            if (inputTexto.value.length < 4 || inputTexto.value.length > 50) {
+                formValido = false;
+            }
+        }
+    });
+    return formValido;
 }
 
 const validateOtro = (otro) => {
@@ -94,8 +115,8 @@ const validateOtro = (otro) => {
     return true;
 }
 
-const validateTema = (temas) => {
-    if (!temas) return false;
+const validateTema = (tema) => {
+    if (!tema) return false;
     return true;
 }
 
@@ -112,7 +133,7 @@ const validateForm = () => {
     let region = miForm["región"].value;
     let comuna = miForm["comuna"].value;
     let fotos = miForm["foto"].files;
-    let info_contacto = miForm["info_contacto"].value;
+    let otraFoto = miForm["otra-foto"].files;
     let otro = miForm["otro"].value;
     let tema = miForm["tema"].value;
 
@@ -134,7 +155,8 @@ const validateForm = () => {
     if (!vaildateRegion(region)) setInvalidInput("Region");
     if (!validateComuna(comuna)) setInvalidInput("Comuna");
     if (!validateFotos(fotos)) setInvalidInput("Fotos");
-    if (!validateInfoContacto(info_contacto)) setInvalidInput("Información de contacto");
+    if (!validateOtraFoto(otraFoto)) setInvalidInput("La otra foto añadida");
+    if (!validateInfoContacto()) setInvalidInput("Información de contacto");
     if (!validateOtro(otro)) setInvalidInput("Otro");
     if (!validateTema(tema)) setInvalidInput("Tema");
 
