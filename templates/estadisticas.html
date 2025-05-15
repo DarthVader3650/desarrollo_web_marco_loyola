@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>{% block title %} Estadísticas {% endblock %}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block css %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/estadisticas.css') }}">
+        {% endblock %}
+   </head>
+   <body>
+        <div class="barra-titulo">
+            <h1>Estadísticas</h1>
+        </div>
+
+        <div class="espacio-actividad">
+            <img alt="gráfico de actividades por día" src="{{ url_for('static', filename='images/Actividades_por_día.png') }}" width="650" height="500">
+        </div>
+
+        <div class="espacio-actividad">
+            <img alt="gráfico de total de actividades pro tipó" src="{{ url_for('static', filename='images/Cantidad_de_actividades_durante_el_año.png') }}" width="650" height="500">
+        </div>
+
+        <div class="espacio-actividad">
+            <img alt="gráfico de actividades durante el año" src="{{ url_for('static', filename='images/gráfico_de_torta.png') }}" width="650" height="500">
+        </div>
+
+        <div class="btn-group">
+            <a id="btnVolverMenu" class="button" href="{{ url_for('index') }}">Volver al menú</a>
+        </div>
+   </body>
+</html>

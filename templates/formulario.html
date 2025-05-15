@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+   <head>
+        <title>{% block title %} Formulario {% endblock %}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block css %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/formulario.css') }}">
+        {% endblock %}
+   </head>
+   <body>
+        <div class="form-container">
+            <h2>Nueva actividad</h2>
+            <hr>
+            <form id="nueva_actividad" name="nueva_actividad" action="{{ url_for('formulario') }}" method="post" enctype="multipart/form-data">
+                <h3>¿Donde?</h3>
+
+                <div class="form-group">
+                    <label for="región">Región</label>
+                    <select id="región" name="región" required>
+                        <option value="">Selecciona una región</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="comuna">Comuna</label>
+                    <select id="comuna" name="comuna" required>
+                        <option value="">Selecciona una comuna</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="sector">Sector</label>
+                    <input id="sector" name="sector" type="text">
+                </div>
+
+                <h3>¿Quién organiza?</h3>
+
+                <div class="form-group">
+                <label for="nombre">Nombre</label> 
+                <input id="nombre" name="name" type="text" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="teléfono">Teléfono</label>
+                    <input id="teléfono" name="teléfono" type="tel">
+                </div>
+
+                <div class="form-group">
+                    <label>Contactar con (máximo 5)</label>
+                    <input type="checkbox" name="whatsapp" onclick="revisaCheck(this);"> Whatsapp
+                    <input id="whatsapp" type="text" name="whatsapp-id" style="display:none;"> <br>
+                    <input type="checkbox" name="instagram" onclick="revisaCheck(this);"> Instagram
+                    <input id="instagram" type="text" name="instagram-id" style="display:none;"><br>
+                    <input type="checkbox" name="telegram" onclick="revisaCheck(this);"> Telegram
+                    <input id="telegram" type="text" name="telegram-id" style="display:none;"><br>
+                    <input type="checkbox" name="tiktok" onclick="revisaCheck(this);"> TikTok
+                    <input id="tiktok" type="text" name="tiktok-id" style="display: none;"> <br>
+                    <input type="checkbox" name="X" onclick="revisaCheck(this);"> X
+                    <input id="X" type="text" name="X-id" style="display:none;"> <br>
+                    <input type="checkbox" name="otra" onclick="revisaCheck(this);"> Otra
+                    <input id="otra" type="text" name="otra-id" style="display: none;">
+                </div>
+
+                <h3>¿Cuándo y de qué trata?</h3>
+
+                <div class="form-group">
+                    <label for="inicio">Día y hora inicio</label>
+                    <input id="inicio" name="inicio" type="datetime-local" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="término">Día y hora término</label>
+                    <input id="término" name="término" type="datetime-local">
+                </div>
+
+                <div class="form-group">
+                    <label for="descripción">Descripción</label>
+                    <textarea id="descripción" name="descripción" rows="10" cols="50"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="tema">Tema</label>
+                    <select id="tema" name="tema" required>
+                        <option value="">Selecciona un tema</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="otro" style="display: none;">Descripción del tema</label>
+                    <input id="otro" name="otro" type="text" style="display: none;">
+                </div>
+
+                <div class="form-group">
+                    <label for="foto">Foto</label>
+                    <input id="foto" name="foto" type="file" multiple accept="image/*" required> <br><br>
+                    <input id="otra-foto" name="otra-foto" type="file" accept="image/*" style="display: none;">
+                    <button class="btn-foto" type="button" id="agregarFoto">Agregar otra foto</button>
+                </div>
+
+                <button type="button" id="agregar">Agregar actividad</button>
+                <a class="button-back" id="volver" href="{{ url_for('index') }}">Volver</a>
+            </form>
+
+            <div id="val-box" hidden>
+                <h2 id="val-msg"></h2>
+                <ul id="val-list"></ul>
+            </div>
+
+        </div>
+
+        {% block javascript %}
+            <script lang="javascript" src="{{ url_for('static', filename='js/validations.js') }}"></script>
+            <script lang="javascript" src="{{ url_for('static', filename='js/tiempo.js') }}"></script>
+            <script lang="javascript" src="{{ url_for('static', filename='js/select.js') }}"></script>
+            <script lang="javascript" src="{{ url_for('static', filename='js/region_comuna.js') }}"></script>
+        {% endblock %}
+   </body>
+</html>
