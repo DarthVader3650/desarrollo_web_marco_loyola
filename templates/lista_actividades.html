@@ -12,8 +12,64 @@
         <div class="barra-titulo">
             <h1>Listado de Actividades</h1>
         </div>
+
+        {% if data %}
+            <table>
+                <tr>
+                    <th>Inicio</th>
+                    <th>Término</th>
+                    <th>Comuna</th>
+                    <th>Sector</th>
+                    <th>Tema</th>
+                    <th>Nombre del organizador</th>
+                    <th>Cantidad de fotos</th>
+                </tr>
+                {% for actividad in data %}
+                    <tr>
+                        <td>{{ actividad.inicio }}</td>
+                        <td>{{ actividad.termino }}</td>
+                        <td>{{ actividad.comuna }}</td>
+                        <td>{{ actividad.sector }}</td>
+                        <td>
+                            {% if actividad.tema %}
+                                <ul>
+                                {% for tema in actividad.tema %}
+                                    <li>{{ tema }}</li>
+                                {% endfor %}
+                                </ul>
+                            {% else %}
+                                Sin temas
+                            {% endif %}
+                        </td>
+                        <td>{{ actividad.nombre_organizador }}</td>
+                        <td>{{ actividad.cantidad_fotos }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+            {% if total_paginas > 1 %}
+            <div class="pagination">
+                {% if pagina_actual > 1 %}
+                    <a href="{{ url_for('listado', page=pagina_actual - 1) }}">&laquo; Anterior</a>
+                {% else %}
+                    <span class="disabled">&laquo; Anterior</span>
+                {% endif %}
+
+                {% if pagina_actual < total_paginas %}
+                    <a href="{{ url_for('listado', page=pagina_actual + 1) }}">Siguiente &raquo;</a>
+                {% else %}
+                    <span class="disabled">Siguiente &raquo;</span>
+                {% endif %}
+            </div>
+            {% endif %}
+
+        {% else %}
+            <h2>No hay actividades agregadas aún.</h2>
+        {% endif %}
         <div class="btn-group">
             <a id="menu" class="button" href="{{ url_for('index') }}">Volver al menú</a>
         </div>
+        {% block javascript %}
+        {% endblock %}
    </body>
 </html>

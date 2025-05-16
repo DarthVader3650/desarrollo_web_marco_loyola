@@ -21,47 +21,43 @@
         {% if data %}
             <h2>Últimas Actividades Agregadas</h2>
             <table>
-                <thead>
+                <tr>
+                    <th>Inicio</th>
+                    <th>Término</th>
+                    <th>Comuna</th>
+                    <th>Sector</th>
+                    <th>Tema</th>
+                    <th>Foto</th>
+                </tr>
+                {% for actividad in data %}
                     <tr>
-                        <th>Inicio</th>
-                        <th>Término</th>
-                        <th>Comuna</th>
-                        <th>Sector</th>
-                        <th>Temas</th>
-                        <th>Foto</th>
+                        <td>{{ actividad.inicio }}</td>
+                        <td>{{ actividad.termino }}</td>
+                        <td>{{ actividad.comuna }}</td>
+                        <td>{{ actividad.sector }}</td>
+                        <td>
+                            {% if actividad.tema %}
+                                <ul>
+                                {% for tema in actividad.tema %}
+                                    <li>{{ tema }}</li>
+                                {% endfor %}
+                                </ul>
+                            {% else %}
+                                Sin temas
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if actividad.path_foto %}
+                                <img src="{{ actividad.path_foto }}" alt="Primera foto de la actividad" width="250" height="300">
+                            {% else %}
+                                Sin foto
+                            {% endif %}
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    {% for actividad in data %}
-                        <tr>
-                            <td>{{ actividad.inicio }}</td>
-                            <td>{{ actividad.termino or 'Sin definir' }}</td>
-                            <td>{{ actividad.comuna or 'Sin especificar' }}</td>
-                            <td>{{ actividad.sector or 'Sin especificar' }}</td>
-                            <td>
-                                {% if actividad.temas %}
-                                    <ul>
-                                    {% for tema in actividad.temas %}
-                                        <li>{{ tema }}</li>
-                                    {% endfor %}
-                                    </ul>
-                                {% else %}
-                                    Sin temas
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if actividad.path_foto %}
-                                    <img src="{{ actividad.path_foto }}" alt="Primera foto de la actividad" style="max-width: 100px;">
-                                {% else %}
-                                    Sin foto
-                                {% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
+                {% endfor %}
             </table>
         {% else %}
-            <p>No hay actividades agregadas aún.</p>
+            <h2>No hay actividades agregadas aún.</h2>
         {% endif %}
     </body>
 </html>

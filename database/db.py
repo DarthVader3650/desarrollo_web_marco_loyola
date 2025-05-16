@@ -50,7 +50,7 @@ class Actividad(Base):
 
     comuna = relationship("Comuna", back_populates="actividad")
     foto = relationship("Foto", back_populates="actividad")
-    contactar = relationship("Contactar", back_populates="actividad")
+    contactar_por = relationship("Contactar_por", back_populates="actividad")
     actividad_tema = relationship("Actividad_tema", back_populates="actividad")
 
 class Foto(Base):
@@ -63,15 +63,15 @@ class Foto(Base):
 
     actividad = relationship("Actividad", back_populates="foto")
 
-class Contactar(Base):
-    __tablename__ = 'contactar'
+class Contactar_por(Base):
+    __tablename__ = 'contactar_por'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     nombre = Column(Enum('whatsapp', 'telegram', 'X', 'instagram', 'tiktok', 'otra'), nullable=False)
     identificador = Column(String(150), nullable=False)
     actividad_id = Column(Integer, ForeignKey("actividad.id"), primary_key=True, nullable=False)
 
-    actividad = relationship("Actividad", back_populates="contactar")
+    actividad = relationship("Actividad", back_populates="contactar_por")
 
 class Actividad_tema(Base):
     __tablename__ = 'actividad_tema'
@@ -83,13 +83,6 @@ class Actividad_tema(Base):
 
     actividad = relationship("Actividad", back_populates="actividad_tema")
 
-def crear_actividad(comuna, sector, nombre, email, celular, inicio, termino, descripcion):
-    session = SessionLocal()
-    new_actividad = Actividad(comuna_id=comuna, sector=sector, nombre=nombre, email=email, celular=celular, dia_hora_inicio=inicio, dia_hora_termino=termino, descripcion=descripcion)
-    session.add(new_actividad)
-    session.commit()
-    session.close()
-
 def crear_foto(ruta_archivo, nombre_archivo, actividad_id):
     session = SessionLocal()
     new_foto = Foto(ruta_archivo=ruta_archivo, nombre_archivo=nombre_archivo, actividad_id=actividad_id)
@@ -99,7 +92,7 @@ def crear_foto(ruta_archivo, nombre_archivo, actividad_id):
 
 def crear_contacto(nombre, identificador, actividad_id):
     session = SessionLocal()
-    new_contacto = Contactar(nombre=nombre, identificador=identificador, actividad_id=actividad_id)
+    new_contacto = Contactar_por(nombre=nombre, identificador=identificador, actividad_id=actividad_id)
     session.add(new_contacto)
     session.commit()
     session.close()

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>{% block title %} Actividad {% endblock %}</title> 
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block css %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/lista_actividades.css') }}">
+        {% endblock %}
+   </head>
+   <body>
+        <div class="barra-titulo">
+            <h1>Actividad</h1>
+        </div>
+
+        <div class="espacio-actividad">
+            <h2>Fecha de inicio</h2>
+            <p>La fecha es el 28 de marzo del 2025 a las 12hrs.</p>
+            <h2>Fecha de término</h2>
+            <p>La actividad termina el mismo 28 de marzo a las 14 hrs.</p>
+            <h2>Región</h2>
+            <p>Región Metropolitana</p>
+            <h2>Comuna</h2>
+            <p>La actividad se va a desarrollar en la Comuna de Providencia.</p>
+            <h2>Sector</h2>
+            <p>Mall Costanera Center, piso 4.</p>
+            <h2>Nombre del organizador</h2>
+            <p>Sasa</p>
+            <h2>Email</h2>
+            <p>sasa123@mail.com</p>
+            <h2>Número de teléfono</h2>
+            <p>9 8888 0001</p>
+            <h2>Contactar por</h2>
+            <p>Instagram: @sasa123</p>
+            <h2>Descripción</h2>
+            <p>A Sasa le gustaría saber donde se encuentra la tienda de Lego en el mall ¿Serás capaz de ayudar a Sasa a encontrarla?</p>
+            <h2>Tema</h2>
+            <p>Otro: Búsqueda</p>
+            <h2>Fotos</h2>
+            <img alt="david chad" id="img_1" src="../pictures/david_chad.jpg" width="320" height="240">
+        </div>
+
+        <!-- Basado en el modal de W3School -->
+        <div id="myModal" class="modal">
+            <span class="close">&times;</span>
+        </div>
+
+        <div class="btn-group">
+            <a id="volverPortada" class="button" href="{{ url_for('index') }}">Volver al menú</a>
+            <a id="volverListado" class="button" href="{{ url_for('listado') }}">Volver al listado</a>
+        </div>
+        {% block javascript %}
+            <script lang="javascript" src="{{ url_for('static', filename='js/ampliarImg.js') }}"></script>
+        {% endblock %}
+   </body>
+</html>
