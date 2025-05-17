@@ -215,10 +215,9 @@ const validateForm = () => {
         submitButton.innerText = "Si, estoy seguro";
         submitButton.style.marginRight = "10px";
         submitButton.addEventListener("click", () => {
-            validationMessageElem.innerText = "¡Hemos recibido su información, muchas gracias y suerte en su actividad!";
+            // validationMessageElem.innerText = "¡Hemos recibido su información, muchas gracias y suerte en su actividad!";
             validationListElem.removeChild(submitButton);
             validationListElem.removeChild(backButton);
-            validationListElem.appendChild(volverButton);
             miForm.submit();
         });
     
@@ -229,12 +228,6 @@ const validateForm = () => {
           miForm.style.display = "block";
           validationBox.hidden = true;
         });
-
-        let volverButton = document.createElement("button");
-        volverButton.innerText = "Volver al menu";
-        volverButton.addEventListener("click", () => {
-            window.location.href = "../html/portada.html";
-        })
     
         validationListElem.appendChild(submitButton);
         validationListElem.appendChild(backButton);

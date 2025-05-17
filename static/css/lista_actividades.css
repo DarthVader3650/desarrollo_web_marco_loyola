@@ -3,7 +3,7 @@ body {
 }
 
 .barra-titulo {
-    justify-content: space-between; /* Espacia los elementos */
+    justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
     background-color: #32a8d3;
@@ -45,6 +45,14 @@ th, td {
   
 tr:nth-child(even){background-color: #ace8ff}
 tr:nth-child(odd){background-color: rgb(205, 252, 255);}
+tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+tbody tr:hover {
+    background-color: #0092a5;
+    cursor: pointer;
+}
   
 th {
     background-color: #0f52af;
@@ -180,7 +188,7 @@ img:hover {opacity: 0.7;}
 .pagination .current-page {
     background-color: #007bff;
     color: white;
-    border-color: #007bff;
+    border-color: #007bfe;
 }
 .pagination .disabled {
     color: #858585;

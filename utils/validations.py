@@ -57,7 +57,7 @@ def validate_tema(tema):
     else:
         return False
     
-def validate_otro_tema(glosa_otro): # Se llama solo si el tema es "otro"
+def validate_otro_tema(glosa_otro):
     return glosa_otro and (3 <= len(glosa_otro) <= 15)
 
 ALLOWED_CONTACT_NAMES = {'whatsapp', 'telegram', 'X', 'instagram', 'tiktok', 'otra'}

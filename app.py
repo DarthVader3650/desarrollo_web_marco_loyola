@@ -73,6 +73,7 @@ def listado():
                 temas_actividad.append(act_tema.tema)
 
         data.append({
+            "id": actividad.id,
             "inicio": actividad.dia_hora_inicio,
             "termino": actividad.dia_hora_termino,
             "comuna": actividad.comuna.nombre,
@@ -174,9 +175,56 @@ def formulario():
 
             session.close()
 
-            return redirect(url_for('index'))
+            return redirect(url_for('enviado'))
     else:
         return render_template("formulario.html")
+
+@app.route('/enviado_éxito', methods=['GET'])
+def enviado():
+    return render_template("enviado.html")
+
+@app.route('/actividad/<int:actividad_id>', methods=['GET'])
+def actividad(actividad_id):
+    session = db.SessionLocal()
+    actividad = session.query(db.Actividad).filter_by(id=actividad_id).first()
+
+    temas_detalle = []
+    for act_tema in actividad.actividad_tema:
+        if act_tema.tema == "otro" and act_tema.glosa_otro:
+            temas_detalle.append(act_tema.glosa_otro)
+        else:
+            temas_detalle.append(act_tema.tema)
+
+    contactos_detalle = []
+    if actividad.contactar_por:
+        for contacto in actividad.contactar_por:
+            tipo_contacto = contacto.nombre
+            contactos_detalle.append(f"{tipo_contacto}: {contacto.identificador}")
+    
+    lista_fotos = []
+    for foto in actividad.foto:
+        img_filename = f"uploads/{foto.nombre_archivo}"
+        lista_fotos.append(url_for('static', filename=img_filename))
+
+    data = {
+        "id": actividad.id,
+        "nombre_organizador": actividad.nombre,
+        "email": actividad.email,
+        "celular": actividad.celular if actividad.celular else "No especificado",
+        "dia_hora_inicio": actividad.dia_hora_inicio.strftime('%d de %B de %Y a las %H:%M hrs'),
+        "dia_hora_termino": actividad.dia_hora_termino.strftime('%d de %B de %Y a las %H:%M hrs') if actividad.dia_hora_termino else "No especificada",
+        "descripcion": actividad.descripcion if actividad.descripcion else "Sin descripción.",
+        "sector": actividad.sector if actividad.sector else "No especificado",
+        "comuna": actividad.comuna.nombre,
+        "region": actividad.comuna.region.nombre,
+        "temas": temas_detalle,
+        "contactos": contactos_detalle,
+        "fotos": lista_fotos
+    }
+    
+    session.close()
+
+    return render_template("actividad_elegida.html", data=data)
 
 
 

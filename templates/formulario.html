@@ -115,10 +115,10 @@
         </div>
 
         {% block javascript %}
-            <script lang="javascript" src="{{ url_for('static', filename='js/validations.js') }}"></script>
-            <script lang="javascript" src="{{ url_for('static', filename='js/tiempo.js') }}"></script>
-            <script lang="javascript" src="{{ url_for('static', filename='js/select.js') }}"></script>
-            <script lang="javascript" src="{{ url_for('static', filename='js/region_comuna.js') }}"></script>
+            <script type="text/javascript" src="{{ url_for('static', filename='js/validations.js') }}"></script>
+            <script type="text/javascript" src="{{ url_for('static', filename='js/tiempo.js') }}"></script>
+            <script type="text/javascript" src="{{ url_for('static', filename='js/select.js') }}"></script>
+            <script type="text/javascript" src="{{ url_for('static', filename='js/region_comuna.js') }}"></script>
         {% endblock %}
    </body>
 </html>
