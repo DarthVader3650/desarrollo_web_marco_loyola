@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>{% block title %} Portada {% endblock %}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block css %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/portada.css') }}">
+        {% endblock %}
+    </head>
+    <body>
+        <h1>¡Bienvenidos a la página social más épica de la web!</h1>
+        <h2>¿Que deseas hacer?</h2>
+
+        <div class="btn-group">
+            <a id="agregar" class="button" href="{{ url_for('formulario') }}">Agregar actividad</a>
+            <a id="listado" class="button" href="{{ url_for('listado') }}">Ver listado de actividades</a>
+            <a id="estadisticas" class="button" href="{{ url_for('estadisticas') }}">Estadísticas</a>
+        </div>
+
+        {% if data %}
+            <h2>Últimas Actividades Agregadas</h2>
+            <table>
+                <tr>
+                    <th>Inicio</th>
+                    <th>Término</th>
+                    <th>Comuna</th>
+                    <th>Sector</th>
+                    <th>Tema</th>
+                    <th>Foto</th>
+                </tr>
+                {% for actividad in data %}
+                    <tr>
+                        <td>{{ actividad.inicio }}</td>
+                        <td>{{ actividad.termino }}</td>
+                        <td>{{ actividad.comuna }}</td>
+                        <td>{{ actividad.sector }}</td>
+                        <td>
+                            {% if actividad.tema %}
+                                <ul>
+                                {% for tema in actividad.tema %}
+                                    <li>{{ tema }}</li>
+                                {% endfor %}
+                                </ul>
+                            {% else %}
+                                Sin temas
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if actividad.path_foto %}
+                                <img src="{{ actividad.path_foto }}" alt="Primera foto de la actividad" width="250" height="300">
+                            {% else %}
+                                Sin foto
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <h2>No hay actividades agregadas aún.</h2>
+        {% endif %}
+    </body>
+</html>

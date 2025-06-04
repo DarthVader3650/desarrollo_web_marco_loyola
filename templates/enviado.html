@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>{% block title %} Enviado con éxito {% endblock %}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block css %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/formulario.css') }}">
+        {% endblock %}
+    </head>
+    <body>
+        <div class="val-box">
+            <h2>¡Actividad creada con éxito!</h2>
+            <a class="button-back" id="volver" href="{{ url_for('index') }}">Volver al menú</a>
+        </div>
+    </body>
+</html>

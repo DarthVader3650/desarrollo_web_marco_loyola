@@ -1,0 +1,56 @@
+body {
+    background-color: skyblue;
+}
+
+h1 {
+    color: white;
+    font-size: 45px;
+    font-weight: bold;
+    font-style: italic;
+    text-align: center;
+}
+
+h2 {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-group .button {
+    background-color: #00a0ff;
+    border: 2px solid lightcyan;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 5px;
+    transition: background-color 0.3s ease;
+}
+  
+.btn-group .button:hover {
+    background-color: #5ab8f7;
+}
+
+table {
+    background-color: ghostwhite;
+    margin: 0 auto;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th, td {
+    border-style: inset;
+    border-color: #2a7fa1;
+    padding: 15px;
+}

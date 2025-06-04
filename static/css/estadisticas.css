@@ -1,0 +1,60 @@
+body {
+    background-color: skyblue;
+}
+
+.barra-titulo {
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #32a8d3;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: center;
+    padding: 10px 20px;
+    background-color: #32a8d3;
+    border-radius: 15px;
+}
+
+.espacio-actividad {
+    margin: 0 auto;
+    text-align: center;
+    padding: 10px 20px;
+    background-color: #32a8d3;
+    border-radius: 15px;
+    width: 50%;
+    margin-bottom: 10px
+}
+
+img {
+    border-radius: 5px;
+}
+
+.btn-group {
+    margin-top: 10px;
+    display: flex;
+    justify-content: left;
+}
+
+.btn-group .button {
+    background-color: #00a0ff;
+    border: 2px solid lightcyan;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 5px;
+    transition: background-color 0.3s ease;
+}
+  
+.btn-group .button:hover {
+    background-color: #5ab8f7;
+}
