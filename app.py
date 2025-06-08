@@ -1,12 +1,14 @@
-from flask import Flask, request, render_template, redirect, url_for, session, flash
+from flask import Flask, request, render_template, redirect, url_for, session, flash, jsonify
+from flask_cors import cross_origin
 from database import db
 from utils.validations import validate_form
+from utils.validations_comentario import validate_posteo, validate_texto, validate_nombre_comentario
 from datetime import datetime
 from werkzeug.utils import secure_filename
 import os
 import hashlib
 import filetype
-from sqlalchemy import func
+from sqlalchemy import func, case
 from math import ceil
 
 UPLOAD_FOLDER = 'static/uploads'
@@ -49,6 +51,87 @@ def index():
 @app.route('/estadisticas', methods=["GET"])
 def estadisticas():
     return render_template("estadisticas.html")
+
+@app.route("/get-estadisticas-data", methods=["GET"])
+@cross_origin(origin="127.0.0.1", supports_credentials=True)
+def gets_estadisticas_data():
+    session = db.SessionLocal()
+    actividades_por_dia = session.query(
+        func.date(db.Actividad.dia_hora_inicio).label('fecha'),
+        func.count(db.Actividad.id).label('cantidad')
+    ).group_by(func.date(db.Actividad.dia_hora_inicio)).order_by(func.date(db.Actividad.dia_hora_inicio)).all()
+
+    fechas = []
+    cantidades = []
+    for row in actividades_por_dia:
+        fechas.append(row.fecha.strftime('%d-%m-%Y'))
+        cantidades.append(row.cantidad)
+    
+    session.close()
+    return jsonify({
+        'categories': fechas,
+        'data': cantidades
+    })
+
+@app.route("/get-estadisticas-data-torta", methods=["GET"])
+@cross_origin(origin="127.0.0.1", supports_credentials=True)
+def get_estadisticas_data_torta():
+    session = db.SessionLocal()
+    actividades_por_tipo = session.query(
+        db.Actividad_tema.tema,
+        func.count(db.Actividad_tema.id).label('cantidad')
+    ).group_by(db.Actividad_tema.tema).all()
+
+    data_para_grafico = []
+    for tema, cantidad in actividades_por_tipo:
+        data_para_grafico.append({
+            "name": tema.capitalize(),
+            "y": cantidad
+        })
+
+    session.close()
+    return jsonify({"data": data_para_grafico})
+
+@app.route("/get-estadisticas-data-3", methods=["GET"])
+@cross_origin(origin="127.0.0.1", supports_credentials=True)
+def get_estadisticas_data_tres():
+    session = db.SessionLocal()
+    franja_horaria_case = case(
+        (func.hour(db.Actividad.dia_hora_inicio) < 12, 'Mañana'),
+        (func.hour(db.Actividad.dia_hora_inicio) < 18, 'Mediodía'),
+        else_='Tarde'
+    ).label('franja')
+
+    actividad_por_hora_mes = session.query(
+        func.month(db.Actividad.dia_hora_inicio).label('mes'),
+        franja_horaria_case,
+        func.count(db.Actividad.id).label('cantidad')
+    ).group_by(func.month(db.Actividad.dia_hora_inicio),
+               franja_horaria_case
+    ).order_by(func.month(db.Actividad.dia_hora_inicio),
+               franja_horaria_case).all()
+
+    datos_por_franja = {
+        'Mañana': [0,0,0,0,0,0,0,0,0,0,0,0],
+        'Mediodía': [0,0,0,0,0,0,0,0,0,0,0,0],
+        'Tarde': [0,0,0,0,0,0,0,0,0,0,0,0]
+    }
+
+    for row in actividad_por_hora_mes:
+        mes_numero = row.mes
+        franja = row.franja
+        cantidad = row.cantidad
+        datos_por_franja[franja][mes_numero - 1] = cantidad
+    
+    series_para_grafico = []
+    for nombre_franja, data_puntos in datos_por_franja.items():
+        series_para_grafico.append({
+            "name": nombre_franja,
+            "data": data_puntos
+        })
+
+    session.close()
+    return jsonify({'series': series_para_grafico})
 
 @app.route('/listado_actividades', methods=["GET"])
 def listado():
@@ -226,7 +309,50 @@ def actividad(actividad_id):
 
     return render_template("actividad_elegida.html", data=data)
 
+@app.route('/comentario', methods=['POST'])
+@cross_origin(origin="127.0.0.1", supports_credentials=True)
+def comentario():
+    data = request.form
+    nombre = data.get("nombre")
+    comentario_texto = data.get("comentario")
+    actividad_id = int(data.get("actividad_id"))
 
+    if not validate_posteo(nombre, comentario_texto):
+        return jsonify({
+            "status": "error",
+            "message": "Datos inválidos. El nombre debe tener entre 3 y 80 caracteres, y el comentario al menos 5."
+        }), 400
+
+    session = db.SessionLocal()
+    nuevo_comentario = db.Comentario(nombre=nombre, texto=comentario_texto, actividad_id=actividad_id)
+    session.add(nuevo_comentario)
+    session.commit()
+    comentario_creado = {
+        'id': nuevo_comentario.id,
+        'nombre': nuevo_comentario.nombre,
+        'texto': nuevo_comentario.texto,
+        'fecha': nuevo_comentario.fecha.strftime('%d de %B de %Y a las %H:%M hrs')
+    }
+
+    session.close()
+
+    return jsonify({"status": "ok", "comentario": comentario_creado})
+
+@app.route('/actividad/<int:actividad_id>/comentarios', methods=['GET'])
+@cross_origin(origin="127.0.0.1", supports_credentials=True)
+def get_comentarios(actividad_id):
+    session = db.SessionLocal()
+    comentarios = session.query(db.Comentario).filter_by(actividad_id=actividad_id).order_by(db.Comentario.fecha.desc()).all()
+    comentarios_list = []
+    for com in comentarios:
+        comentarios_list.append({
+            'id': com.id,
+            'nombre': com.nombre,
+            'texto': com.texto,
+            'fecha': com.fecha.strftime('%d de %B de %Y a las %H:%M hrs')
+        })
+    session.close()
+    return jsonify(comentarios_list)
 
 if __name__ == "__main__":
     app.run(debug=True)

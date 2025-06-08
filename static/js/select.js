@@ -1,4 +1,4 @@
-const temas = ["música", "deporte", "ciencia", "religíon", "política", "tecnología", "juegos", "baile", "comida", "otro"];
+const temas = ["música", "deporte", "ciencias", "religión", "política", "tecnología", "juegos", "baile", "comida", "otro"];
 const fotos = document.getElementById("foto");
 const otraFoto = document.getElementById("otra-foto");
 let btnAgregarFoto = document.getElementById("agregarFoto");

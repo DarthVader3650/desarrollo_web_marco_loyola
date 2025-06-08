@@ -70,7 +70,7 @@ p {
 }
 
 .btn-group .button {
-    background-color: #00a0ff; /* Green */
+    background-color: #00a0ff;
     border: 2px solid lightcyan;
     color: white;
     padding: 15px 32px;
@@ -194,4 +194,123 @@ img:hover {opacity: 0.7;}
     color: #858585;
     pointer-events: none;
     border-color: #eee;
+}
+
+/* Estilos para el formulario */
+.formulario {
+    background-color: #e0f2f7;
+    border: 1px solid #b3e0ed;
+    border-radius: 8px;
+    padding: 25px;
+    margin: 30px auto;
+    max-width: 80%;
+    text-align: left;
+}
+
+.formulario h2 {
+    color: #0056b3;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: xx-large;
+    border-bottom: 2px solid #66bbdd;
+    padding-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #004080;
+    font-size: 1.1em;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    width: calc(100% - 20px);
+    padding: 12px 10px;
+    border: 1px solid #7488f8;
+    border-radius: 5px;
+    font-size: 1em;
+    color: #333;
+    background-color: #f8ffff;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+    border-color: #2196f3;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.3);
+    outline: none;
+}
+
+/* Estilos para los comentarios */
+#agregar_comentario {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: medium;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#agregar_comentario:hover {
+    background-color: #0056b3;
+}
+
+.seccion-comentarios {
+    background-color: #e0f2f7;
+    border: 1px solid #b3e0ed;
+    border-radius: 8px;
+    padding: 25px;
+    margin: 30px auto;
+    max-width: 80%;
+}
+
+.seccion-comentarios h2 {
+    color: #0056b3;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: xx-large;
+    border-bottom: 2px solid #66bbdd;
+    padding-bottom: 10px;
+}
+
+#lista-comentarios {
+    margin-top: 20px;
+}
+
+.comentario-item {
+    background-color: #f8ffff;
+    border-left: 5px solid #007bff;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.comentario-item .comentario-meta {
+    font-size: 0.9em;
+    color: #555;
+    margin: 0 0 10px 0;
+}
+
+.comentario-item .comentario-meta strong {
+    color: #004080;
+}
+
+.comentario-item .comentario-texto {
+    font-size: medium;
+    color: #333;
+    line-height: 1.5;
+    margin: 0;
+    word-wrap: break-word;
 }

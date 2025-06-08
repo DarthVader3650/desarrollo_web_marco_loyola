@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>{% block title %} Actividad de {{ data.nombre_organizador }} {% endblock %}</title> 
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block css %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/lista_actividades.css') }}">
+        {% endblock %}
+   </head>
+   <body>
+        <div class="barra-titulo">
+            <h1>Detalles de la actividad</h1>
+        </div>
+
+        <div class="espacio-actividad">
+            <h2>Fecha de inicio</h2>
+            <p>{{ data.dia_hora_inicio }}</p>
+            <h2>Fecha de término</h2>
+            <p>{{ data.dia_hora_termino }}</p>
+            <h2>Región</h2>
+            <p>{{ data.region }}</p>
+            <h2>Comuna</h2>
+            <p>{{ data.comuna }}</p>
+            <h2>Sector</h2>
+            <p>{{ data.sector }}</p>
+            <h2>Nombre del organizador</h2>
+            <p>{{ data.nombre_organizador }}</p>
+            <h2>Email</h2>
+            <p>{{ data.email }}</p>
+            <h2>Número de teléfono</h2>
+            <p>{{ data.celular }}</p>
+            <h2>Contactar por:</h2>
+            <ul>
+                {% for contacto in data.contactos %}
+                    <li>{{ contacto }}</li>
+                {% endfor %}
+            </ul>
+            <h2>Descripción</h2>
+            <p>{{ data.descripcion }}</p>
+            <h2>Tema</h2>
+            <ul>
+                {% for tema in data.temas %}
+                    <li>{{ tema }}</li>
+                {% endfor %}
+            </ul>
+            <h2>Fotos</h2>
+            <div>
+                {% for foto in data.fotos %}
+                    <div>
+                        <img src="{{ foto }}" alt="Foto de la actividad" width="320" height="240">
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Basado en el modal de W3School -->
+        <div id="myModal" class="modal">
+            <span class="close">&times;</span>
+        </div>
+
+        <div class="formulario">
+            <h2>¡Comenta esta publicación!</h2>
+            <form id="nuevo_comentario" name="nuevo_comentario" action="{{ url_for('comentario') }}" method="post">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input id="nombre" name="nombre" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="comentario">Comentario</label>
+                    <textarea id="comentario" name="comentario" rows="4" cols="50"></textarea>
+                </div>
+
+                <input type="hidden" id="actividad_id" name="actividad_id" value="{{ data.id }}">
+
+                <button type="button" id="agregar_comentario">Postear</button>
+            </form>
+
+            <div id="val-box" hidden>
+                <h3 id="val-msg"></h3>
+            </div>
+        </div>
+
+        <div class="seccion-comentarios">
+            <h2>Comentarios</h2>
+            <div id="lista-comentarios"></div>
+        </div>
+
+        <div class="btn-group">
+            <a id="volverPortada" class="button" href="{{ url_for('index') }}">Volver al menú</a>
+            <a id="volverListado" class="button" href="{{ url_for('listado') }}">Volver al listado</a>
+        </div>
+        {% block javascript %}
+            <script type="text/javascript" src="{{ url_for('static', filename='js/ampliarImg.js') }}"></script>
+            <script type="text/javascript" src="{{ url_for('static', filename='js/comentarios.js') }}"></script>
+        {% endblock %}
+   </body>
+</html>

@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DATETIME, Enum
+from sqlalchemy import create_engine, Column, Integer, BigInteger, String, ForeignKey, DATETIME, Enum, TIMESTAMP, func
 from sqlalchemy.orm import sessionmaker, declarative_base, relationship
 
 DB_NAME = "tarea2"
@@ -52,6 +52,7 @@ class Actividad(Base):
     foto = relationship("Foto", back_populates="actividad")
     contactar_por = relationship("Contactar_por", back_populates="actividad")
     actividad_tema = relationship("Actividad_tema", back_populates="actividad")
+    comentario = relationship("Comentario", back_populates="actividad")
 
 class Foto(Base):
     __tablename__ = 'foto'
@@ -82,6 +83,17 @@ class Actividad_tema(Base):
     actividad_id = Column(Integer, ForeignKey("actividad.id"), primary_key=True, nullable=False)
 
     actividad = relationship("Actividad", back_populates="actividad_tema")
+
+class Comentario(Base):
+    __tablename__ = 'comentario'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nombre = Column(String(80), nullable=False)
+    texto = Column(String(300), nullable=False)
+    fecha = Column(TIMESTAMP, nullable=False, default=func.now())
+    actividad_id = Column(Integer, ForeignKey("actividad.id"), nullable=False)
+
+    actividad = relationship("Actividad", back_populates="comentario")
 
 def crear_foto(ruta_archivo, nombre_archivo, actividad_id):
     session = SessionLocal()
