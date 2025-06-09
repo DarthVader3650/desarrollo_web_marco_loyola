@@ -20,10 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
         comentarioDiv.className = 'comentario-item';
         comentarioDiv.innerHTML = `
             <p class="comentario-meta">
-                <strong>${comentario.nombre}</strong> comentó el <span>${comentario.fecha}</span>
+                <strong>${comentario.nombre}</strong> comentó el ${comentario.fecha}
             </p>
-            <p class="comentario-texto">${comentario.texto}</p>
-        `;
+            <p class="comentario-texto">${comentario.texto}</p>`;
         if (prepend) {
             listaComentariosDiv.prepend(comentarioDiv); // Añade el comentario al principio
         } else {

@@ -225,16 +225,16 @@ img:hover {opacity: 0.7;}
     margin-bottom: 8px;
     font-weight: bold;
     color: #004080;
-    font-size: 1.1em;
+    font-size: 20px;
 }
 
 .form-group input[type="text"],
 .form-group textarea {
     width: calc(100% - 20px);
     padding: 12px 10px;
-    border: 1px solid #7488f8;
+    border: 2px solid #7488f8;
     border-radius: 5px;
-    font-size: 1em;
+    font-size: 15px;
     color: #333;
     background-color: #f8ffff;
     transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -243,7 +243,6 @@ img:hover {opacity: 0.7;}
 .form-group input[type="text"]:focus,
 .form-group textarea:focus {
     border-color: #2196f3;
-    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.3);
     outline: none;
 }
 
@@ -298,7 +297,7 @@ img:hover {opacity: 0.7;}
 }
 
 .comentario-item .comentario-meta {
-    font-size: 0.9em;
+    font-size: 14px;
     color: #555;
     margin: 0 0 10px 0;
 }
