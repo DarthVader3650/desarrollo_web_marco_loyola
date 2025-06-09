@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         } catch (error) {
             console.error('Falló la obtención de datos para el gráfico:', error);
-            document.getElementById('chart-lineas').innerHTML = '<h3>No se pudieron cargar los datos. Intenta de nuevo más tarde.</h3>';
+            document.getElementById('chart-lineas').innerHTML = '<h3>No se pudieron cargar los datos.</h3>';
         }
     }
 
@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 text: 'Cantidad de Actividades por Día'
             },
             xAxis: {
-                // Eje X: Usamos las fechas que vienen de la API.
                 categories: fechas,
                 title: {
                     text: 'Fechas'
@@ -37,11 +36,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 title: {
                     text: 'Cantidad de Actividades'
                 },
-                allowDecimals: false // No tiene sentido tener actividades decimales.
+                allowDecimals: false
             },
             series: [{
                 name: 'Actividades',
-                // Datos del Eje Y: Usamos las cantidades que vienen de la API.
                 data: cantidades
             }]
         });
@@ -72,7 +70,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 text: 'Total de Actividades por Tipo'
             },
             tooltip: {
-                // Muestra "Tema: X actividades (Y.Y%)"
                 pointFormat: '{series.name}: <b>{point.y} ({point.percentage:.1f}%)</b>'
             },
             plotOptions: {
@@ -107,14 +104,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
         } catch (error) {
             console.error('Falló la obtención de datos para el gráfico:', error);
-            document.getElementById('chart-barras').innerHTML = '<h3>No se pudieron cargar los datos. Intenta de nuevo más tarde.</h3>';
+            document.getElementById('chart-barras').innerHTML = '<h3>No se pudieron cargar los datos.</h3>';
         }
     }
 
     function renderizarGraficoBarrasTriple(datos) {
         Highcharts.chart('chart-barras', {
             chart: {
-                type: 'column'
+                type: 'column',
+                borderRadius: 10
             },
             title: {
                 text: 'Actividades por Mes'
@@ -139,8 +137,8 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             plotOptions: {
                 series: {
-                    groupPadding: 0.05, // Espacio entre grupos de barras
-                    pointPadding: 0.1,   // Espacio entre barras individuales
+                    groupPadding: 0.05,
+                    pointPadding: 0.1,
                     borderWidth: 0
                 }
             },
