@@ -2,7 +2,7 @@ const validateName = (name) => {
     if(!name) return false;
     let lengthValid = name.trim().length >= 4 && name.trim().length <= 200;
     return lengthValid;
-}
+};
 
 const validateEmail = (email) => {
     if (!email) return false;
@@ -36,7 +36,7 @@ const validateSector = (sector) => {
     let lenghtValid = sector.length >= 0 && sector.length <= 100;
 
     return lenghtValid;
-}
+};
 
 const validateDataTime = (datatime) => {
     if (!datatime) return false;
@@ -45,7 +45,7 @@ const validateDataTime = (datatime) => {
     let formatValid = re.test(datatime);
 
     return formatValid;
-}
+};
 
 const validateDataTimeEnd = (datatime) => {
     if (!datatime) return true;
@@ -54,17 +54,17 @@ const validateDataTimeEnd = (datatime) => {
     const dateEnd = new Date(datatime);
     const dateBegin = new Date(datatimeBegin);
     return dateEnd > dateBegin;
-}
+};
 
 const vaildateRegion = (region) => {
     if (!region) return false;
     return true;
-}
+};
 
 const validateComuna = (comuna) => {
     if (!comuna) return false;
     return true;
-}
+};
 
 const validateFotos = (files) => {
     if (!files) return false;
@@ -83,7 +83,7 @@ const validateFotos = (files) => {
     
     // devolvemos la lógica AND de las validaciones.
     return lengthValid && typeValid;
-}
+};
 
 const validateOtraFoto = (foto) => {
     let btnAgregarFoto = document.getElementById("agregarFoto");
@@ -121,7 +121,7 @@ const validateInfoContacto = () => {
         }
     });
     return formValido;
-}
+};
 
 const validateOtro = (otro) => {
     const tema = document.getElementById("tema").value;
@@ -129,14 +129,14 @@ const validateOtro = (otro) => {
         return otro.length >= 3 && otro.length <= 15;
     }
     return true;
-}
+};
 
 const validateTema = (tema) => {
     if (!tema) return false;
     return true;
-}
+};
 
-// const validateContactar = (formas) => {}
+
 
 const validateForm = () => {
     let miForm = document.forms["nueva_actividad"];

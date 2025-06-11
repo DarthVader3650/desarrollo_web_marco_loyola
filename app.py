@@ -39,9 +39,9 @@ def index():
 
         data.append({
             "inicio": actividad.dia_hora_inicio,
-            "termino": actividad.dia_hora_termino,
+            "termino": actividad.dia_hora_termino if actividad.dia_hora_termino else "No especificada",
             "comuna": actividad.comuna.nombre,
-            "sector": actividad.sector,
+            "sector": actividad.sector if actividad.sector else "No especificado",
             "tema": temas_actividad,
             "path_foto": path_foto
         })
@@ -158,9 +158,9 @@ def listado():
         data.append({
             "id": actividad.id,
             "inicio": actividad.dia_hora_inicio,
-            "termino": actividad.dia_hora_termino,
+            "termino": actividad.dia_hora_termino if actividad.dia_hora_termino else "No especificada",
             "comuna": actividad.comuna.nombre,
-            "sector": actividad.sector,
+            "sector": actividad.sector if actividad.sector else "No especificado",
             "tema": temas_actividad,
             "nombre_organizador": actividad.nombre,
             "cantidad_fotos": cantidad_de_fotos
@@ -211,7 +211,7 @@ def formulario():
             if dia_hora_termino:
                 dt_termino = datetime.fromisoformat(dia_hora_termino)
             else:
-                None
+                dt_termino = None
 
             _comuna_ = db.get_comuna_by_name(comuna)
             
@@ -259,6 +259,8 @@ def formulario():
             session.close()
 
             return redirect(url_for('enviado'))
+        else:
+            return render_template("formulario.html")
     else:
         return render_template("formulario.html")
 
@@ -301,7 +303,7 @@ def actividad(actividad_id):
         "comuna": actividad.comuna.nombre,
         "region": actividad.comuna.region.nombre,
         "temas": temas_detalle,
-        "contactos": contactos_detalle,
+        "contactos": contactos_detalle if contactos_detalle else ["No especificado"],
         "fotos": lista_fotos
     }
     

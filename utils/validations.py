@@ -10,12 +10,12 @@ def validate_email(email):
     return bool(re.fullmatch(regex_email, email)) and (15 <= len(email) <= 100)
 
 def validate_phone(numero):
-    regex_numero = r"^(\+56)?(\s?)((2|3|4|5|6|7|8|9)(\s?)\d{8})$"
-    valid_len = (8 <= len(numero))
-    if numero is not None:
-        return bool(re.fullmatch(regex_numero, numero)) and valid_len
-    else:
+    if numero is None or numero.strip() == "":
         return True
+    else:
+        regex_numero = r"^(\+56)?(\s?)((2|3|4|5|6|7|8|9)(\s?)\d{8})$"
+        valid_len = (8 <= len(numero))
+        return bool(re.fullmatch(regex_numero, numero)) and valid_len
     
 def validate_sector(sector):
     return (0 <= len(sector) <= 100)
@@ -62,9 +62,9 @@ def validate_otro_tema(glosa_otro):
 
 ALLOWED_CONTACT_NAMES = {'whatsapp', 'telegram', 'X', 'instagram', 'tiktok', 'otra'}
 def validate_info_contacto(contactos_seleccionados):
-    if len(contactos_seleccionados) > 5:
-        return False
     if not contactos_seleccionados:
+        return True
+    if len(contactos_seleccionados) > 5:
         return False
 
     for contacto in contactos_seleccionados:
