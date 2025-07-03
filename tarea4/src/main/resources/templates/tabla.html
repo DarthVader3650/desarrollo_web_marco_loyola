@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Tabla de notas</title>
+        <link rel="stylesheet" th:href="@{/css/tabla.css}" />
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    </head>
+    <body>
+        <h1>Actividades realizadas</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha Inicio</th>
+                    <th>Sector</th>
+                    <th>Nombre</th>
+                    <th>Tema</th>
+                    <th>Nota Promedio</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="actividad : ${actividades}"> 
+                    <td th:text="${actividad.id}"></td>
+                    <td th:text="${actividad.fechaInicio}"></td>
+                    <td th:text="${actividad.sector}"></td>
+                    <td th:text="${actividad.nombre}"></td>
+                    <td th:text="${actividad.tema}"></td>
+                    <td th:text="${actividad.notaPromedio}"></td>
+                    <td>evaluar</td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
